@@ -18,6 +18,7 @@ class Logger:
     @staticmethod
     def setLogging(param):
         Logger.logging = param
+        Log('Logging is active')
 
     @staticmethod
     def isLogging():

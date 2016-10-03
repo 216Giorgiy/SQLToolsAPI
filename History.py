@@ -1,4 +1,4 @@
-VERSION = "v0.1.0"
+__version__ = "v0.1.0"
 
 
 class SizeException(Exception):
@@ -10,43 +10,38 @@ class NotFoundException(Exception):
 
 
 class History:
-    queries = []
-    maxSize = 100
 
-    @staticmethod
-    def add(query):
-        if History.getSize() >= History.getMaxSize():
-            History.queries.pop(0)
-        History.queries.insert(0, query)
+    def __init__(self, maxSize=100):
+        self.items = []
+        self.maxSize = maxSize
 
-    @staticmethod
-    def get(index):
-        if index < 0 or index > (len(History.queries) - 1):
+    def add(self, query):
+        if self.getSize() >= self.getMaxSize():
+            self.items.pop(0)
+        self.items.insert(0, query)
+
+    def get(self, index):
+        if index < 0 or index > (len(self.items) - 1):
             raise NotFoundException("No query selected")
 
-        return History.queries[index]
+        return self.items[index]
 
-    @staticmethod
-    def setMaxSize(size=100):
+    def setMaxSize(self, size=100):
         if size < 1:
             raise SizeException("Size can't be lower than 1")
 
-        History.maxSize = size
-        return History.maxSize
+        self.maxSize = size
+        return self.maxSize
 
-    @staticmethod
-    def getMaxSize():
-        return History.maxSize
+    def getMaxSize(self):
+        return self.maxSize
 
-    @staticmethod
-    def getSize():
-        return len(History.queries)
+    def getSize(self):
+        return len(self.items)
 
-    @staticmethod
-    def all():
-        return History.queries
+    def all(self):
+        return self.items
 
-    @staticmethod
-    def clear():
-        History.queries = []
-        return History.queries
+    def clear(self):
+        self.items = []
+        return self.items
